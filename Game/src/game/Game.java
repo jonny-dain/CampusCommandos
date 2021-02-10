@@ -19,12 +19,17 @@ import javafx.scene.text.Text;
 
 public class Game extends Application {
 	
-
-	
+	/*Pane is the root 'node', off which we have children which are all 'added' to 
+	 * the root and subsequent nodes. This makes a tree like structure. Pane is 
+	 * like a stage which basically displays our game. Adding nodes to the root pane 
+	 * makes them visible in our game.
+	*/
 	private Pane root = new Pane();
 	
+	//Making a player who is an instance of sprite
 	private Sprite player = new Sprite(100, 460, 40, 40, "player", Color.DARKGREEN);
 	
+	//Making the ground which is an instance of platform
 	private Platform ground = new Platform (0, 500, 900, 100, Color.BROWN);
 	
 	private Parent createContent() {
@@ -47,7 +52,10 @@ public class Game extends Application {
 		return root;
 	}
 	
-	///Can add more levels as character progresses through game
+	/*Can add more levels as character progresses through game. 
+	 * In level1, we're just adding platforms and spikes, on top
+	 * of the already existent player and ground.
+	 */
 	
 	private void level1() {
 		Platform lvl1 = new Platform (50, 300, 200, 10, Color.BLACK);
@@ -68,15 +76,17 @@ public class Game extends Application {
 	
 	
 	
-	//Game loop describes processes to follow throughout the game (the game logic)
+	/*Game loop describes processes to follow throughout the game (the game logic) 
+	 * and is being called roughly 60 times per second due to animation timer.
+	 */
 	private void loop() {
 		
 	    
-		
+		//Iterating through all the children of the root node (eg: sprites, platforms)
 		root.getChildren().forEach(c -> {
 			if (c instanceof Sprite) {
 				if (((Sprite) c).type== "player") {
-					
+					//Add gravity
 					if (c.getTranslateY() != 460) {
 						player.moveDown();
 					}
@@ -84,7 +94,9 @@ public class Game extends Application {
 					for (int i = 0; i < root.getChildren().size(); i++) {
                         Node f = root.getChildren().get(i);
 						if (f instanceof Platform) {
-							
+							/*Making it such that player won't fall if on a platform. Needs fixing
+							* so that its only when they're standing on top of it.
+							*/
 							if(player.getBoundsInParent().intersects(f.getBoundsInParent())) {
 								player.canFall = false;
 								break;
@@ -100,7 +112,7 @@ public class Game extends Application {
 					root.getChildren().forEach(s -> {
 						if (s instanceof Sprite) {
 							if(((Sprite)s).type == "enemy") {
-						
+						        //If player touches a spike, they die
 								if(player.getBoundsInParent().intersects(s.getBoundsInParent())) {
 									player.isDead = true;
 							    }
@@ -117,7 +129,7 @@ public class Game extends Application {
 					root.getChildren().forEach(s -> {
 						if (s instanceof Sprite) {
 							if (((Sprite) s).type== "enemy") {
-						
+						        //If bullet touches spike, it dies
 								if (c.getBoundsInParent().intersects(s.getBoundsInParent())) {
 			                        
 									((Sprite) s).isDead = true;
@@ -130,7 +142,7 @@ public class Game extends Application {
 				
 			} 
 		});
-	    
+	    //Removing all children form the screen that have died
 		root.getChildren().forEach(c ->{
             if (c instanceof Sprite) {
 			    if (((Sprite)c).isDead == true) {
@@ -148,15 +160,16 @@ public class Game extends Application {
 	
 	
 	
-	
+	//Extending rectangle for simplicity. Better if extended ImageView.
 	private static class Sprite extends Rectangle{
 		boolean isDead = false;
 		boolean canJump = true;
 		boolean canFall = true;
 		
+		//Type. Eg: player, enemy etc.
 		final String type;
 		
-		
+		//Constructor
 		Sprite(int x, int y, int w, int h, String type, Color color){
 			super(w, h, color);
 			
@@ -189,6 +202,7 @@ public class Game extends Application {
 
 	}
 	
+	//Platforms for jumping on. Ground is also an instance of platform.
 	private static class Platform extends Rectangle{
 		
 		Platform(int x, int y, int w, int h, Color color){
@@ -198,11 +212,13 @@ public class Game extends Application {
 		}
 	}
 	
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		
         Scene scene = new Scene(createContent());
         
+        //Controls
         scene.setOnKeyPressed(e -> {
         	switch (e.getCode()) {
         	case LEFT:
@@ -229,7 +245,7 @@ public class Game extends Application {
 		
 	}
 	
-
+	//Start = entry point for program.
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
