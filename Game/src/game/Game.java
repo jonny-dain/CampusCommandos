@@ -23,7 +23,7 @@ public class Game extends Application {
 	
 	Renderer r = new Renderer();
 	
-	private Parent gameLoop() {
+	private Parent createContent() {
 		
 		//Animation timer repeats 60 times every second and gives the game it's sense of time
 		AnimationTimer timer = new AnimationTimer() {
@@ -134,7 +134,7 @@ public class Game extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		
-        Scene scene = new Scene(gameLoop());
+        Scene scene = new Scene(createContent());
         
         //Controls
         scene.setOnKeyPressed(e -> {
