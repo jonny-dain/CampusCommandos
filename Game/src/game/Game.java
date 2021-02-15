@@ -47,16 +47,16 @@ public class Game extends Application {
 	/*Game loop describes processes to follow throughout the game (the game logic) 
 	 * and is being called roughly 60 times per second due to animation timer.
 	 */
-	private void loop() {
+private void loop() {
 		
 	    
 		//Iterating through all the children of the root node (eg: sprites, platforms)
 		r.root.getChildren().forEach(c -> {
-			if (c instanceof Sprite) {
-				if (((Sprite) c).type== "player") {
+			if (c instanceof Character) {
+				if (((Character) c).getType()== "player") {
 					//Add gravity
 					if (c.getTranslateY() != 460) {
-						r.player.moveDown();
+						r.player.moveDownPixels(1);
 					}
 					
 					for (int i = 0; i < r.root.getChildren().size(); i++) {
@@ -66,10 +66,10 @@ public class Game extends Application {
 							* so that its only when they're standing on top of it.
 							*/
 							if(r.player.getBoundsInParent().intersects(f.getBoundsInParent())) {
-								r.player.canFall = false;
+								r.player.setCanFall(false);
 								break;
 							} else {
-								r.player.canFall = true;
+								r.player.setCanFall(true);
 							}
 						}
 					}
@@ -78,11 +78,11 @@ public class Game extends Application {
 					
 					
 					r.root.getChildren().forEach(s -> {
-						if (s instanceof Sprite) {
-							if(((Sprite)s).type == "enemy") {
+						if (s instanceof Character) {
+							if(((Character)s).getType() == "enemy") {
 						        //If player touches a spike, they die
 								if(r.player.getBoundsInParent().intersects(s.getBoundsInParent())) {
-									r.player.isDead = true;
+									r.player.setDead(true);
 							    }
 							}
 						}
@@ -92,15 +92,15 @@ public class Game extends Application {
 					
 					
 						
-				} if (((Sprite) c).type.equals("playerbullet")) {
-					((Sprite) c).moveRight();
+				} if (((Character) c).getType().equals("playerbullet")) {
+					((Character) c).moveRightPixels(5);
 					r.root.getChildren().forEach(s -> {
-						if (s instanceof Sprite) {
-							if (((Sprite) s).type== "enemy") {
+						if (s instanceof Character) {
+							if (((Character) s).getType() == "enemy") {
 						        //If bullet touches spike, it dies
 								if (c.getBoundsInParent().intersects(s.getBoundsInParent())) {
 			                        
-									((Sprite) s).isDead = true;
+									((Character) s).setDead(true);
 								}
 							}
 						}
@@ -112,8 +112,8 @@ public class Game extends Application {
 		});
 	    //Removing all children form the screen that have died
 		r.root.getChildren().forEach(c ->{
-            if (c instanceof Sprite) {
-			    if (((Sprite)c).isDead == true) {
+            if (c instanceof Character) {
+			    if (((Character)c).isDead() == true) {
 				    r.root.getChildren().remove(c);
 			    }
 			}
@@ -121,42 +121,40 @@ public class Game extends Application {
 		
 	}
 	
+
+	// method to be implemented in the character class, some chars may shoot, some don't
 	private void shoot(Sprite who) {
-		Sprite s = new Sprite((int) who.getTranslateX() + 20, (int) who.getTranslateY(), 20, 5, who.type + "bullet", Color.BLACK);
+		Sprite s = new Sprite((int)who.getTranslateX() + 20, (int) who.getTranslateY(), 20, 5, who.getType() + "bullet", Color.BLACK);
 		r.root.getChildren().add(s);
 	}
-	
-	
-	
 
-	
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		
         Scene scene = new Scene(createContent());
         
-        //Controls
-        scene.setOnKeyPressed(e -> {
+        scene.setOnKeyPressed(e ->{
         	switch (e.getCode()) {
         	case LEFT:
-        		r.player.moveLeft();
+        		r.player.moveLeftPixels(5);
         		break;
         	case RIGHT:
-        		r.player.moveRight();
-        		break;
+        		r.player.moveRightPixels(5);
+        		break;   		
         	case UP:
-        		r.player.moveUp();
+        		r.player.moveUpPixels(20);
         		break;
         	case DOWN:
-        		r.player.moveDown();
+        		r.player.moveDownPixels(1);
         		break;
         	case SPACE:
         		shoot(r.player);
         		break;
-        		
+     
         	}
         });
+        
         stage.setScene(scene);
 		stage.setTitle("wassup");
 		stage.show();
