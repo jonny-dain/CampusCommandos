@@ -30,9 +30,9 @@ public class Renderer {
 	 * of the already existent player and ground.
 	 */
 	private void level1() {
-		Platform lvl1 = new Platform (50, 300, 200, 10, Color.BLACK);
-		Platform lvl2 = new Platform (300, 100, 300, 10, Color.BLACK);
-		Platform lvl3 = new Platform (600, 200, 200, 10, Color.BLACK);
+		Platform platform1 = new Platform (50, 300, 200, 10, Color.BLACK);
+		Platform platform2 = new Platform (300, 100, 300, 10, Color.BLACK);
+		Platform platform3 = new Platform (600, 200, 200, 10, Color.BLACK);
 		Character spike1 = new Character(60, 270, 30, 30, "enemy", Color.DARKRED);
 		root.getChildren().add(spike1);
 		Character spike2 = new Character(320, 70, 30, 30, "enemy", Color.DARKRED);
@@ -41,8 +41,8 @@ public class Renderer {
 		root.getChildren().add(spike3);
 		Character spike4 = new Character(800, 470, 30, 30, "enemy", Color.DARKRED);
 		root.getChildren().add(spike4);
-		root.getChildren().add(lvl1);
-		root.getChildren().add(lvl2);
-		root.getChildren().add(lvl3);
+		root.getChildren().add(platform1);
+		root.getChildren().add(platform2);
+		root.getChildren().add(platform3);
 	}
 }

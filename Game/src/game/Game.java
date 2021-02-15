@@ -56,7 +56,7 @@ private void loop() {
 				if (((Character) c).getType()== "player") {
 					//Add gravity
 					if (c.getTranslateY() != 460) {
-						r.player.moveDownPixels(1);
+						r.player.moveDownPixels(2);
 					}
 					
 					for (int i = 0; i < r.root.getChildren().size(); i++) {
@@ -123,9 +123,9 @@ private void loop() {
 	
 
 	// method to be implemented in the character class, some chars may shoot, some don't
-	private void shoot(Sprite who) {
-		Sprite s = new Sprite((int)who.getTranslateX() + 20, (int) who.getTranslateY(), 20, 5, who.getType() + "bullet", Color.BLACK);
-		r.root.getChildren().add(s);
+	private void shoot(Sprite shooter) {
+		Character bullet = new Character((int)shooter.getTranslateX() + 20, (int) shooter.getTranslateY(), 20, 5, shooter.getType() + "bullet", Color.BLACK);
+		r.root.getChildren().add(bullet);
 	}
 
 	

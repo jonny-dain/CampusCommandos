@@ -1,4 +1,6 @@
 module Game {
-	opens game to javafx.graphics;
+	exports game;
+
+	requires javafx.base;
 	requires javafx.graphics;
 }

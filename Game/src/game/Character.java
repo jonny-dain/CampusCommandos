@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 public class Character extends Sprite {
 
 	public Character(int x, int y, int width, int height, String type, Color color) {
-		super(x, y, width, height, "Character", color);
+		super(x, y, width, height, type, color);
 	}
 	
 	public boolean isDead = false;
