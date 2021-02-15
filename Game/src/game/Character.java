@@ -1,3 +1,5 @@
+//comment
+
 package game;
 
 import javafx.scene.paint.Color;
