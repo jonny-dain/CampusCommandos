@@ -19,7 +19,8 @@ import javafx.scene.text.Text;
 
 public class Game extends Application {
 	
-
+    public double mouseX;
+    public double mouseY;
 	
 	Renderer r = new Renderer();
 	
@@ -92,8 +93,9 @@ private void loop() {
 					
 					
 						
+
 				} if (((Character) c).getType().equals("playerbullet")) {
-					((Character) c).moveRightPixels(5);
+					((Character) c).vector();
 					r.root.getChildren().forEach(s -> {
 						if (s instanceof Character) {
 							if (((Character) s).getType() == "enemy") {
@@ -125,7 +127,16 @@ private void loop() {
 	// method to be implemented in the character class, some chars may shoot, some don't
 	private void shoot(Sprite shooter) {
 		Character bullet = new Character((int)shooter.getTranslateX() + 20, (int) shooter.getTranslateY(), 20, 5, shooter.getType() + "bullet", Color.BLACK);
+		bullet.xVector = mouseX-(double)bullet.currentX;
+		bullet.yVector = mouseY-(double)bullet.currentY;
+		bullet.changeRateX = bullet.xVector;
+		bullet.changeRateY = bullet.yVector;
+		bullet.setRotate(Math.toDegrees(Math.atan(bullet.yVector/bullet.xVector)));
+		double hypoteneuse = Math.sqrt(bullet.yVector*bullet.yVector+bullet.xVector*bullet.xVector);
+		bullet.changeRateX = bullet.xVector/hypoteneuse;
+		bullet.changeRateY = bullet.yVector/hypoteneuse;
 		r.root.getChildren().add(bullet);
+		
 	}
 
 	
@@ -136,32 +147,35 @@ private void loop() {
         
         scene.setOnKeyPressed(e ->{
         	switch (e.getCode()) {
-        	case LEFT:
+        	case A:
         		r.player.moveLeftPixels(5);
         		break;
-        	case RIGHT:
+        	case D:
         		r.player.moveRightPixels(5);
-        		break;   		
-        	case UP:
+        		break;
+        	case W:
         		r.player.moveUpPixels(20);
         		break;
-        	case DOWN:
+        	case S:
         		r.player.moveDownPixels(1);
         		break;
-        	case SPACE:
-        		shoot(r.player);
-        		break;
-     
+        
+        		
         	}
         });
-        
+        scene.setOnMouseClicked(e -> shoot(r.player));
+        scene.setOnMouseMoved(e -> {
+        	mouseX = e.getX();
+        	mouseY = e.getY();
+        });
+
         stage.setScene(scene);
 		stage.setTitle("wassup");
 		stage.show();
 		
 	}
 	
-	//Start = entry point for program.
+	
 	public static void main(String[] args) {
 		Application.launch(args);
 	}

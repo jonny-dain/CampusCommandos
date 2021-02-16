@@ -1,4 +1,3 @@
-//comment
 
 package game;
 
@@ -8,6 +7,8 @@ public class Character extends Sprite {
 
 	public Character(int x, int y, int width, int height, String type, Color color) {
 		super(x, y, width, height, type, color);
+		currentX = x;
+		currentY = y;
 	}
 	
 	public boolean isDead = false;
@@ -15,6 +16,12 @@ public class Character extends Sprite {
 	public boolean canFall = true;
 	public int health = 100;
 	public int speed = 10;
+	int currentX;
+	int currentY;
+	double xVector;
+	double yVector;
+	double changeRateX;
+	double changeRateY;
 	
 	public boolean isDead() {
 		return isDead;
@@ -74,6 +81,11 @@ public class Character extends Sprite {
 		if(canFall()) {
 			setTranslateY(getTranslateY() + pixels);
 		}
+	}
+	
+	void vector() {
+		setTranslateX(getTranslateX() + (changeRateX*10));
+		setTranslateY(getTranslateY() + (changeRateY*10));
 	}
 	
 	

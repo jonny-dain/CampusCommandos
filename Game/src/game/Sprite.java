@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 //Extending rectangle for simplicity. Better if extended ImageView.
+
 public class Sprite extends Rectangle {
 	
 	public final String TYPE;
@@ -13,6 +14,7 @@ public class Sprite extends Rectangle {
 		TYPE = type;
 		setTranslateX(x);
 		setTranslateY(y);
+
 	}
 	
 	public String getType() {
