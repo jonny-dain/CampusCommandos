@@ -8,6 +8,12 @@ public class Sprite extends Rectangle{
 		boolean isDead = false;
 		boolean canJump = true;
 		boolean canFall = true;
+		int currentX;
+		int currentY;
+		double xVector;
+		double yVector;
+		double changeRateX;
+		double changeRateY;
 		
 		//Type. Eg: player, enemy etc.
 		final String type;
@@ -15,6 +21,9 @@ public class Sprite extends Rectangle{
 		//Constructor
 		Sprite(int x, int y, int w, int h, String type, Color color){
 			super(w, h, color);
+			currentX = x;
+			currentY = y;
+			
 			
 			this.type=type;
 			setTranslateX(x);
@@ -42,6 +51,13 @@ public class Sprite extends Rectangle{
 			    setTranslateY(getTranslateY() + 1);
 			}
 		}
+		
+		void bulletVector() {
+			setTranslateX(getTranslateX() + (changeRateX*10));
+			setTranslateY(getTranslateY() + (changeRateY*10));
+		}
+		
+	
 
 	}
 	

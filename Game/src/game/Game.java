@@ -19,7 +19,8 @@ import javafx.scene.text.Text;
 
 public class Game extends Application {
 	
-
+    public double mouseX;
+    public double mouseY;
 	
 	Renderer r = new Renderer();
 	
@@ -93,7 +94,10 @@ public class Game extends Application {
 					
 						
 				} if (((Sprite) c).type.equals("playerbullet")) {
-					((Sprite) c).moveRight();
+					((Sprite) c).bulletVector();
+					System.out.println("Dividing " + ((Sprite) c).xVector + " by itself");
+					System.out.println(((Sprite) c).xVector/((Sprite) c).xVector);
+					//System.out.println(((Sprite) c).changeRateY);
 					r.root.getChildren().forEach(s -> {
 						if (s instanceof Sprite) {
 							if (((Sprite) s).type== "enemy") {
@@ -122,8 +126,20 @@ public class Game extends Application {
 	}
 	
 	private void shoot(Sprite who) {
+		
 		Sprite s = new Sprite((int) who.getTranslateX() + 20, (int) who.getTranslateY(), 20, 5, who.type + "bullet", Color.BLACK);
-		r.root.getChildren().add(s);
+		
+		s.xVector = mouseX-(double)s.currentX;
+		s.yVector = mouseY-(double)s.currentY;
+		s.changeRateX = s.xVector;///Math.abs(s.xVector);
+		s.changeRateY = s.yVector;///Math.abs(s.yVector);
+		s.setRotate(Math.toDegrees(Math.atan(s.yVector/s.xVector)));
+		double hypoteneuse = Math.sqrt(s.yVector*s.yVector+s.xVector*s.xVector);
+		s.changeRateX = s.xVector/hypoteneuse;
+		s.changeRateY = s.yVector/hypoteneuse;
+		
+		//s.setRotate(50);Math.
+		r.root.getChildren().add(s); 
 	}
 	
 	
@@ -139,23 +155,28 @@ public class Game extends Application {
         //Controls
         scene.setOnKeyPressed(e -> {
         	switch (e.getCode()) {
-        	case LEFT:
+        	case A:
         		r.player.moveLeft();
         		break;
-        	case RIGHT:
+        	case D:
         		r.player.moveRight();
         		break;
-        	case UP:
+        	case W:
         		r.player.moveUp();
         		break;
-        	case DOWN:
+        	case S:
         		r.player.moveDown();
         		break;
-        	case SPACE:
-        		shoot(r.player);
-        		break;
+        
         		
         	}
+        });
+        scene.setOnMouseClicked(e -> shoot(r.player));
+        scene.setOnMouseMoved(e -> {
+        	//System.out.println(e.getX());
+        	//System.out.println(e.getY());
+        	mouseX = e.getX();
+        	mouseY = e.getY();
         });
         stage.setScene(scene);
 		stage.setTitle("wassup");
