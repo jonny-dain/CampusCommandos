@@ -109,7 +109,25 @@ private void loop() {
 						});
                     
 				}
-				
+			  
+				if (((Character) c).getType().equals("playerbullet")) {
+					((Character) c).vector();
+					r.root.getChildren().forEach(s -> {
+						if (s instanceof Platform) {
+							if (((Platform) s).getDestruction() > 0) {
+						        //If bullet touches it weakens
+								if (c.getBoundsInParent().intersects(s.getBoundsInParent())) {
+									r.root.getChildren().remove(c);
+									((Platform) s).reduceDestruction();
+									
+									System.out.print("hit  ");
+								}
+							}
+						}
+						});
+                    
+				}
+
 			} 
 		});
 	    //Removing all children form the screen that have died
@@ -117,6 +135,13 @@ private void loop() {
             if (c instanceof Character) {
 			    if (((Character)c).isDead() == true) {
 				    r.root.getChildren().remove(c);
+			    }
+			}
+	    });
+		r.root.getChildren().forEach(p ->{
+            if (p instanceof Platform) {
+			    if (((Platform)p).getDestruction() == 0) {
+				    r.root.getChildren().remove(p);
 			    }
 			}
 	    });

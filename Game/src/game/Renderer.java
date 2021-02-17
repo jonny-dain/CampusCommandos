@@ -16,7 +16,7 @@ public class Renderer {
 
 	
 	//Making the ground which is an instance of platform
-	private Platform ground = new Platform (0, 500, 900, 100, Color.BROWN);
+	private Platform ground = new Platform (0, 500, 900, 100, Color.BROWN, -1);
 	public Parent init() {
 		
 		root.setPrefSize(900, 600);
@@ -30,9 +30,9 @@ public class Renderer {
 	 * of the already existent player and ground.
 	 */
 	private void level1() {
-		Platform platform1 = new Platform (50, 300, 200, 10, Color.BLACK);
-		Platform platform2 = new Platform (300, 100, 300, 10, Color.BLACK);
-		Platform platform3 = new Platform (600, 200, 200, 10, Color.BLACK);
+		Platform platform1 = new Platform (50, 300, 200, 10, Color.BLACK, 4);
+		Platform platform2 = new Platform (300, 100, 300, 10, Color.GREY, 3);
+		Platform platform3 = new Platform (600, 200, 200, 10, Color.BROWN, 1);
 		Character spike1 = new Character(60, 270, 30, 30, "enemy", Color.DARKRED);
 		root.getChildren().add(spike1);
 		Character spike2 = new Character(320, 70, 30, 30, "enemy", Color.DARKRED);
