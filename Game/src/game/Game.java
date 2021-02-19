@@ -21,6 +21,10 @@ public class Game extends Application {
 	
     public double mouseX;
     public double mouseY;
+    
+    List<Node> toBeRemoved = new ArrayList<>();
+    ///List<Node> destroyedPlatforms = new ArrayList<>();
+    
 	
 	Renderer r = new Renderer();
 	
@@ -48,16 +52,26 @@ public class Game extends Application {
 	/*Game loop describes processes to follow throughout the game (the game logic) 
 	 * and is being called roughly 60 times per second due to animation timer.
 	 */
-private void loop() {
-		
+     private void loop() {
+		r.player.moveLeftPixels(7);
+		r.player.moveRightPixels(7);
 	    
 		//Iterating through all the children of the root node (eg: sprites, platforms)
 		r.root.getChildren().forEach(c -> {
+			
 			if (c instanceof Character) {
+				if (((Character) c).isDead) {
+					//deadCharacters.add(c);
+					toBeRemoved.add(c);
+				}
 				if (((Character) c).getType()== "player") {
 					//Add gravity
 					if (c.getTranslateY() != 460) {
+						r.player.setCanJump(false);
 						r.player.moveDownPixels(2);
+					} else {
+						r.player.setCanJump(true);
+						
 					}
 					
 					for (int i = 0; i < r.root.getChildren().size(); i++) {
@@ -71,6 +85,7 @@ private void loop() {
 								break;
 							} else {
 								r.player.setCanFall(true);
+								
 							}
 						}
 					}
@@ -84,16 +99,13 @@ private void loop() {
 						        //If player touches a spike, they die
 								if(r.player.getBoundsInParent().intersects(s.getBoundsInParent())) {
 									r.player.setDead(true);
+									toBeRemoved.add(r.player);
+									
 							    }
 							}
 						}
 					});
 					
-					
-					
-					
-						
-
 				} if (((Character) c).getType().equals("playerbullet")) {
 					((Character) c).vector();
 					r.root.getChildren().forEach(s -> {
@@ -101,26 +113,23 @@ private void loop() {
 							if (((Character) s).getType() == "enemy") {
 						        //If bullet touches spike, it dies
 								if (c.getBoundsInParent().intersects(s.getBoundsInParent())) {
-			                        
+									toBeRemoved.add(c);
 									((Character) s).setDead(true);
+									toBeRemoved.add(s);
+									
+									
 								}
 							}
-						}
-						});
-                    
-				}
-			  
-				if (((Character) c).getType().equals("playerbullet")) {
-					((Character) c).vector();
-					r.root.getChildren().forEach(s -> {
-						if (s instanceof Platform) {
+						} if (s instanceof Platform) {
 							if (((Platform) s).getDestruction() > 0) {
 						        //If bullet touches it weakens
 								if (c.getBoundsInParent().intersects(s.getBoundsInParent())) {
-									r.root.getChildren().remove(c);
+									toBeRemoved.add(c);
 									((Platform) s).reduceDestruction();
+									if (((Platform) s).getDestruction() == 0) {
+										toBeRemoved.add(s);
+									}
 									
-									System.out.print("hit  ");
 								}
 							}
 						}
@@ -131,20 +140,7 @@ private void loop() {
 			} 
 		});
 	    //Removing all children form the screen that have died
-		r.root.getChildren().forEach(c ->{
-            if (c instanceof Character) {
-			    if (((Character)c).isDead() == true) {
-				    r.root.getChildren().remove(c);
-			    }
-			}
-	    });
-		r.root.getChildren().forEach(p ->{
-            if (p instanceof Platform) {
-			    if (((Platform)p).getDestruction() == 0) {
-				    r.root.getChildren().remove(p);
-			    }
-			}
-	    });
+		r.root.getChildren().removeAll(toBeRemoved);
 		
 	}
 	
@@ -173,21 +169,39 @@ private void loop() {
         scene.setOnKeyPressed(e ->{
         	switch (e.getCode()) {
         	case A:
-        		r.player.moveLeftPixels(5);
+        		//r.player.moveLeftPixels(10);
+        		r.player.isMovingLeft = true;
         		break;
         	case D:
-        		r.player.moveRightPixels(5);
+        		//r.player.moveRightPixels(10);
+        		r.player.isMovingRight = true;
         		break;
         	case W:
-        		r.player.moveUpPixels(20);
+        		r.player.moveUpPixels(30);
         		break;
         	case S:
         		r.player.moveDownPixels(1);
         		break;
         
+        
         		
         	}
         });
+        scene.setOnKeyReleased(e ->{
+        	switch (e.getCode()) {
+        	case A:
+        		//r.player.moveLeftPixels(10);
+        		r.player.isMovingLeft = false;
+        		break;
+        	case D:
+        		//r.player.moveRightPixels(10);
+        		r.player.isMovingRight = false;
+        		break;
+        	
+        		
+        	}
+        });
+       
         scene.setOnMouseClicked(e -> shoot(r.player));
         scene.setOnMouseMoved(e -> {
         	mouseX = e.getX();

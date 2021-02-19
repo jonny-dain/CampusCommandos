@@ -22,6 +22,9 @@ public class Character extends Sprite {
 	double yVector;
 	double changeRateX;
 	double changeRateY;
+	boolean isMovingRight;
+	boolean isMovingLeft;
+	
 	
 	public boolean isDead() {
 		return isDead;
@@ -64,16 +67,21 @@ public class Character extends Sprite {
 	}
 	
 	void moveLeftPixels(int pixels) {
-		setTranslateX(getTranslateX() - pixels);
+		if (isMovingLeft == true){
+		   setTranslateX(getTranslateX() - pixels);
+		}
 	}
 	
 	void moveRightPixels(int pixels) {
-		setTranslateX(getTranslateX() + pixels);
+		if (isMovingRight == true) {
+		    setTranslateX(getTranslateX() + pixels);
+		}
 	}
 	
 	void moveUpPixels(int pixels) {
 		if (canJump()) {
 			setTranslateY(getTranslateY() - pixels);
+			
 		}
 	}
 	
