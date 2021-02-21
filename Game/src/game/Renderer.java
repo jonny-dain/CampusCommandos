@@ -12,16 +12,13 @@ public class Renderer {
 	*/
 	public Pane root = new Pane();
 	//Making a player who is an instance of sprite
-	public Character player = new Character(100, 460, 40, 40, "player", Color.DARKGREEN);
+	public Character player = new Character(100, 400, 40, 40, "player", Color.DARKGREEN);
 
 	
-	//Making the ground which is an instance of platform
-	private Platform ground = new Platform (0, 500, 900, 100, Color.BROWN, -1);
 	public Parent init() {
 		
 		root.setPrefSize(900, 600);
 		root.getChildren().add(player);
-		root.getChildren().add(ground);
 		level1();
 		return root;
 	}
@@ -30,19 +27,36 @@ public class Renderer {
 	 * of the already existent player and ground.
 	 */
 	private void level1() {
-		Platform platform1 = new Platform (50, 300, 200, 10, Color.BLACK, 4);
-		Platform platform2 = new Platform (300, 100, 300, 10, Color.GREY, 3);
-		Platform platform3 = new Platform (600, 200, 200, 10, Color.BROWN, 1);
-		Character spike1 = new Character(60, 270, 30, 30, "enemy", Color.DARKRED);
-		root.getChildren().add(spike1);
-		Character spike2 = new Character(320, 70, 30, 30, "enemy", Color.DARKRED);
-		root.getChildren().add(spike2);
-		Character spike3 = new Character(650, 170, 30, 30, "enemy", Color.DARKRED);
-		root.getChildren().add(spike3);
-		Character spike4 = new Character(800, 470, 30, 30, "enemy", Color.DARKRED);
-		root.getChildren().add(spike4);
-		root.getChildren().add(platform1);
-		root.getChildren().add(platform2);
-		root.getChildren().add(platform3);
+		int[][] level1 = 
+			{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			 {0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			 {0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0},
+			 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+			 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+			 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+			};
+
+        for (int i = 0; i < level1[0].length; i++) { 
+            for (int j = 0; j < level1.length; j++) { 
+                if (level1[j][i] == 1) {
+                	Platform platform = new Platform (i * 40, j * 40, 40, 40, Color.BLACK, 2);
+                	root.getChildren().add(platform);
+                }
+                else if (level1[j][i] == 2) {
+                	Character enemy = new Character (i * 40, j * 40, 40, 40, "enemy", Color.DARKRED);
+                	root.getChildren().add(enemy);
+                }
+            } 
+        }
 	}
 }

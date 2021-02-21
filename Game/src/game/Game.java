@@ -53,8 +53,8 @@ public class Game extends Application {
 	 * and is being called roughly 60 times per second due to animation timer.
 	 */
      private void loop() {
-		r.player.moveLeftPixels(7);
-		r.player.moveRightPixels(7);
+		r.player.moveLeftPixels(4);
+		r.player.moveRightPixels(4);
 	    
 		//Iterating through all the children of the root node (eg: sprites, platforms)
 		r.root.getChildren().forEach(c -> {
@@ -65,14 +65,8 @@ public class Game extends Application {
 					toBeRemoved.add(c);
 				}
 				if (((Character) c).getType()== "player") {
-					//Add gravity
-					if (c.getTranslateY() != 460) {
-						r.player.setCanJump(false);
-						r.player.moveDownPixels(2);
-					} else {
-						r.player.setCanJump(true);
-						
-					}
+
+					r.player.moveDownPixels(2);
 					
 					for (int i = 0; i < r.root.getChildren().size(); i++) {
                         Node f = r.root.getChildren().get(i);
@@ -82,9 +76,11 @@ public class Game extends Application {
 							*/
 							if(r.player.getBoundsInParent().intersects(f.getBoundsInParent())) {
 								r.player.setCanFall(false);
+								r.player.setCanJump(true);
 								break;
 							} else {
 								r.player.setCanFall(true);
+								r.player.setCanJump(false);
 								
 							}
 						}
