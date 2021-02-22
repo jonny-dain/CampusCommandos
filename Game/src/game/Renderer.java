@@ -1,6 +1,7 @@
 package game;
 
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -41,18 +42,23 @@ public class Renderer {
 			 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 			 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+			 {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+			 {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+			 {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
 			};
-
+		
+		String imagePath = "Game/gameTiles.png";
+    	Image image = new Image(imagePath);
+		
         for (int i = 0; i < level1[0].length; i++) { 
             for (int j = 0; j < level1.length; j++) { 
                 if (level1[j][i] == 1) {
-                	Platform platform = new Platform (i * 40, j * 40, 40, 40, Color.BLACK, 2);
+                	Platform platform = new Platform (i * 40, j * 40, 0, 0, 40, 40, image, 2);
                 	root.getChildren().add(platform);
-                }
-                else if (level1[j][i] == 2) {
+                } else if (level1[j][i] == 3) {
+                	Platform platform = new Platform (i * 40, j * 40, 0, 10, 40, 40, image, 2);
+                	root.getChildren().add(platform);
+                } else if (level1[j][i] == 2) {
                 	Character enemy = new Character (i * 40, j * 40, 40, 40, "enemy", Color.DARKRED);
                 	root.getChildren().add(enemy);
                 }
