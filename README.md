@@ -21,3 +21,4 @@ Following an NES pixel art style, our game comes with a cooperative, competitive
 
 ![Gameplay Screenshot](Campus2.png)
 
+![Gameplay Screenshot](Campus3.png)
