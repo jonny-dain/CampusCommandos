@@ -17,8 +17,10 @@ Following an NES pixel art style, our game comes with a cooperative, competitive
 
 - Survival is a procedurally generated version of the game, where a new level is generated every time a player completes the level. The player’s health and ammo carry over between levels, so they must be careful with how they play. The goal is to survive as many levels as you can, before dying. This mode is single player.
 
+![Gameplay Screenshot](Campus3.png)
+
 ![Gameplay Screenshot](Campus1.png)
 
 ![Gameplay Screenshot](Campus2.png)
 
-![Gameplay Screenshot](Campus3.png)
+
