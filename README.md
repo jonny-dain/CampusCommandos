@@ -2,6 +2,10 @@
 
 Campus commandos is a side-scrolling 2D high-action shooter that takes the player around the University of Birmingham with the aim of stopping an alien attack. The player spawns into the map as a soldier fighting their way around campus. There are 3 different game modes a user can choose from and 4 different weapon types that a user can play with; each has a separate level of destructive capability and can be used across different aspects of the game.
 
+**Write-up**
+
+Please find the Campus Commandos write-up [here](https://drive.google.com/file/d/1egi0z1QYi30zWOSrDmAckkiMCaSLCQ9X/view?usp=sharing)
+
 **Destructive environment** 
 
 One of the main features of Campus Commandos is its destructive environment. Each map is made up of blocks, the vast majority of which can be shot, blown up and destroyed. The terrain can be manipulated in any way the user pleases, allowing the player to fully engage by creating tactical positions during gameplay.
